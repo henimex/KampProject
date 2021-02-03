@@ -5,9 +5,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    //Interfacein kendisi internal ama operasyonları defaul public
-
-    public interface IProductDal : IEntityRepository<Product>
+    public interface ICategoryDal : IEntityRepository<Category>
     {
 
     }
