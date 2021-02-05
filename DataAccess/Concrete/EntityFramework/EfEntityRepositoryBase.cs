@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using DataAccess.Abstract;
@@ -46,7 +47,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (TContext context = new TContext())
             {
-                throw new NotImplementedException();
+                return context.Set<TEntity>().SingleOrDefault(filter);
             }
         }
 
@@ -54,7 +55,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (TContext context = new TContext())
             {
-                throw new NotImplementedException();
+                return filter == null ? context.Set<TEntity>().ToList() : context.Set<TEntity>().Where(filter).ToList();
             }
         }
 
