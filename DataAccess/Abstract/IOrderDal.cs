@@ -6,10 +6,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    //Interfacein kendisi internal ama operasyonları default public
-
-    public interface IProductDal : IEntityRepository<Product>
+    public interface IOrderDal : IEntityRepository<Order>
     {
-
     }
 }

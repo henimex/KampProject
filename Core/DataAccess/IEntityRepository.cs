@@ -1,10 +1,10 @@
-﻿using Entities.Abstract;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using Core.Entities;
 
-namespace DataAccess.Abstract
+namespace Core.DataAccess
 {
     //Expression | "predicate" == "filter criteria"
     public interface IEntityRepository<T> where T : class, IEntity, new()
