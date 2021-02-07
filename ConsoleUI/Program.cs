@@ -11,7 +11,12 @@ namespace ConsoleUI
         {
             //ListProducts();
             //CategoryTest();
-            
+
+            ProductManager productManager = new ProductManager(new EfProductDal());
+            foreach (var productDetailDto in productManager.GetProductDetails())
+            {
+                Console.WriteLine(productDetailDto.ProductName +" " + productDetailDto.CategoryName);
+            }
         }
 
         private static void CategoryTest()
