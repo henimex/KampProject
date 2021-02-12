@@ -10,6 +10,7 @@ namespace Business.Abstract
     public interface IProductService
     {
         //Void = IResult
+        //List = IDataResult
         IDataResult<List<Product>> GetAll();
         IDataResult<List<Product>> GetAllByCategory(int id);
         IDataResult<List<Product>> GetByUnitPrice(decimal min, decimal max);

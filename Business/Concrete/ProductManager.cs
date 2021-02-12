@@ -56,7 +56,7 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.ProductNameInvalid);
             }
             _productDal.Add(product);
-            return new Result(true, Messages.ProductAdded);
+            return new SuccessResult(Messages.ProductAdded);
         }
     }
 }
