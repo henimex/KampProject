@@ -56,7 +56,6 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
-            ValidationTool.Validate(new ProductValidator(), product);
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
         }
