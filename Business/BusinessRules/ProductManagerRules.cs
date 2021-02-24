@@ -9,7 +9,7 @@ using DataAccess.Abstract;
 
 namespace Business.BusinessRules
 {
-    public class ProductManagerRules
+    public class ProductManagerRules : IProductRuler
     {
         IProductDal _productDal;
         ICategoryService _categoryService;

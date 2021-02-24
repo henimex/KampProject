@@ -22,13 +22,14 @@ namespace Business.Concrete
     {
         IProductDal _productDal;
         ICategoryService _categoryService;
-        private readonly ProductManagerRules _productManagerRules;
+        IProductRuler _productRuler;
+        //ProductManagerRules _productManagerRules;
 
-        public ProductManager(IProductDal productDal, ICategoryService categoryService, ProductManagerRules productManagerRules)
+        public ProductManager(IProductDal productDal, ICategoryService categoryService, IProductRuler productRuler)
         {
             _productDal = productDal;
             _categoryService = categoryService;
-            _productManagerRules = productManagerRules;
+            _productRuler = productRuler;
         }
 
         public IDataResult<List<Product>> GetAll()
@@ -63,13 +64,15 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
-            IResult result = BusinessRuleTool.Run(
-                _productManagerRules.RuleCategoryCount(OptionVariables.MaxCategoryCount, product.CategoryId),
-                _productManagerRules.RuleProductNameExists(product.ProductName),
-                _productManagerRules.RuleCategoryLimit(OptionVariables.CategoryEndLimit)
-                );
+            //IResult result = BusinessRuleTool.Run(
+            //    _productManagerRules.RuleCategoryCount(OptionVariables.MaxCategoryCount, product.CategoryId),
+            //    _productManagerRules.RuleProductNameExists(product.ProductName),
+            //    _productManagerRules.RuleCategoryLimit(OptionVariables.CategoryEndLimit)
+            //    );
 
-            if (result != null) return result;
+            //if (result != null) return result;
+
+            return CheckAllRules(product);
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
         }
@@ -77,15 +80,26 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Update(Product product)
         {
-            IResult result = BusinessRuleTool.Run(
-                _productManagerRules.RuleCategoryCount(OptionVariables.MaxCategoryCount, product.CategoryId),
-                _productManagerRules.RuleProductNameExists(product.ProductName),
-                _productManagerRules.RuleCategoryLimit(OptionVariables.CategoryEndLimit)
-                );
+            //IResult result = BusinessRuleTool.Run(
+            //    _productManagerRules.RuleCategoryCount(OptionVariables.MaxCategoryCount, product.CategoryId),
+            //    _productManagerRules.RuleProductNameExists(product.ProductName),
+            //    _productManagerRules.RuleCategoryLimit(OptionVariables.CategoryEndLimit)
+            //    );
 
-            if (result != null) return result;
+            //if (result != null) return result;
             _productDal.Update(product);
             return new SuccessResult();
+        }
+
+        private IResult CheckAllRules(Product product)
+        {
+            IResult result = BusinessRuleTool.Run(
+                _productRuler.RuleCategoryCount(OptionVariables.MaxCategoryCount, product.CategoryId),
+                _productRuler.RuleProductNameExists(product.ProductName),
+                _productRuler.RuleCategoryLimit(OptionVariables.CategoryEndLimit)
+            );
+
+            return result;
         }
 
         //private IResult RuleCategoryCount(int maxCount, int categoryId)
