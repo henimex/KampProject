@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Business.Abstract;
+using Business.BusinessRules;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -21,11 +22,13 @@ namespace Business.Concrete
     {
         IProductDal _productDal;
         ICategoryService _categoryService;
+        private readonly ProductManagerRules _productManagerRules;
 
-        public ProductManager(IProductDal productDal, ICategoryService categoryService)
+        public ProductManager(IProductDal productDal, ICategoryService categoryService, ProductManagerRules productManagerRules)
         {
             _productDal = productDal;
             _categoryService = categoryService;
+            _productManagerRules = productManagerRules;
         }
 
         public IDataResult<List<Product>> GetAll()
@@ -60,16 +63,13 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
-            IResult result = BusinessRules.Run(
-                RuleCategoryCount(OptionVariables.MaxCategoryCount, product.CategoryId),
-                RuleProductNameExists(product.ProductName),
-                RuleCategoryLimit(OptionVariables.CategoryEndLimit)
+            IResult result = BusinessRuleTool.Run(
+                _productManagerRules.RuleCategoryCount(OptionVariables.MaxCategoryCount, product.CategoryId),
+                _productManagerRules.RuleProductNameExists(product.ProductName),
+                _productManagerRules.RuleCategoryLimit(OptionVariables.CategoryEndLimit)
                 );
 
-            if (result != null)
-            {
-                return result;
-            }
+            if (result != null) return result;
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
         }
@@ -77,46 +77,42 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Update(Product product)
         {
-            IResult result = BusinessRules.Run(
-                RuleCategoryCount(OptionVariables.MaxCategoryCount, product.CategoryId),
-                RuleProductNameExists(product.ProductName),
-                RuleCategoryLimit(OptionVariables.CategoryEndLimit)
+            IResult result = BusinessRuleTool.Run(
+                _productManagerRules.RuleCategoryCount(OptionVariables.MaxCategoryCount, product.CategoryId),
+                _productManagerRules.RuleProductNameExists(product.ProductName),
+                _productManagerRules.RuleCategoryLimit(OptionVariables.CategoryEndLimit)
                 );
 
-            if (result != null)
-            {
-                return result;
-            }
-
+            if (result != null) return result;
             _productDal.Update(product);
             return new SuccessResult();
         }
 
-        private IResult RuleCategoryCount(int maxCount, int categoryId)
-        {
-            var currentCount = _productDal.GetAll(x => x.CategoryId == categoryId).Count;
-            if (currentCount >= maxCount) return new ErrorResult(Messages.CategoryAdetUyarısı);
-            return new SuccessResult();
-        }
+        //private IResult RuleCategoryCount(int maxCount, int categoryId)
+        //{
+        //    var currentCount = _productDal.GetAll(x => x.CategoryId == categoryId).Count;
+        //    if (currentCount >= maxCount) return new ErrorResult(Messages.CategoryAdetUyarısı);
+        //    return new SuccessResult();
+        //}
 
-        private IResult RuleProductNameExists(string search)
-        {
-            var pname = _productDal.GetAll(x => x.ProductName == search).Any();
-            if (pname) return new ErrorResult(Messages.NameAlreadyExists);
+        //private IResult RuleProductNameExists(string search)
+        //{
+        //    var pname = _productDal.GetAll(x => x.ProductName == search).Any();
+        //    if (pname) return new ErrorResult(Messages.NameAlreadyExists);
 
-            return new SuccessResult();
-        }
+        //    return new SuccessResult();
+        //}
 
-        private IResult RuleCategoryLimit(int categoryLimit)
-        {
-            var result = _categoryService.GetAll();
-            if (result.Data.Count > categoryLimit)
-            {
-                return new ErrorResult("");
-            }
+        //private IResult RuleCategoryLimit(int categoryLimit)
+        //{
+        //    var result = _categoryService.GetAll();
+        //    if (result.Data.Count > categoryLimit)
+        //    {
+        //        return new ErrorResult("");
+        //    }
 
-            return new SuccessResult();
-        }
+        //    return new SuccessResult();
+        //}
 
     }
 }

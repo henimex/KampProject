@@ -5,7 +5,7 @@ using Core.Utilities.Results;
 
 namespace Core.Utilities.Business
 {
-    public class BusinessRules
+    public class BusinessRuleTool
     {
         public static IResult Run(params IResult[] logics)
         {
