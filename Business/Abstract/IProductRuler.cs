@@ -10,6 +10,5 @@ namespace Business.Abstract
         IResult RuleCategoryLimit(int categoryLimit);
         IResult RuleProductNameExists(string search);
         IResult RuleCategoryCount(int maxCount, int categoryId);
-
     }
 }
