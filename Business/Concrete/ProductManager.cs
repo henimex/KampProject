@@ -99,7 +99,10 @@ namespace Business.Concrete
                 _productRuler.RuleCategoryLimit(OptionVariables.CategoryEndLimit)
             );
 
-            return result;
+            if (result != null)
+                return result;
+            else
+                return null;
         }
     }
 }
