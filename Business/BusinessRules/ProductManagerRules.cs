@@ -25,7 +25,7 @@ namespace Business.BusinessRules
             var result = _categoryService.GetAll();
             if (result.Data.Count > categoryLimit)
             {
-                return new ErrorResult("");
+                return new ErrorResult(Messages.YeniCategoryEklemeUyarisi);
             }
 
             return new SuccessResult();

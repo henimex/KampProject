@@ -6,9 +6,9 @@ namespace Business.Constants
 {
     public static class OptionVariables
     {
-        //Allowed Maximum Category Units In Products
-        public static int MaxCategoryCount = 2;//10
+        //Allowed Maximum Products in x Categories
+        public static int MaxCategoryCount = 10;//10
         //Stop Accept New Category After x Categories
-        public static int CategoryEndLimit = 5;//15
+        public static int CategoryEndLimit = 15;//15
     }
 }
