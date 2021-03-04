@@ -8,7 +8,11 @@ namespace Business.Constants
     {
         //Allowed Maximum Products in x Categories
         public static int MaxCategoryCount = 10;//10
+        
         //Stop Accept New Category After x Categories
         public static int CategoryEndLimit = 15;//15
+        
+        //Data will remain in cache x minutes. // not usable
+        public static int CacheInMinute = 10;
     }
 }

@@ -22,5 +22,6 @@ namespace Business.Constants
         public static string UserAlreadyExists = "Kullanıcı Zaten Var";
         public static string AccessTokenCreated = "Token Oluşturuldu";
         public static string YeniCategoryEklemeUyarisi = $"{OptionVariables.CategoryEndLimit} olan kategori ekleme limitini aştınız.Daha fazla kategori ekleyemezsiniz.";
+        public static string TransactionAborted = "İstek tamamlanamadığı için iptal edildi.";
     }
 }

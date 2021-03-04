@@ -16,8 +16,7 @@ namespace Core.Aspects.Autofac.Validation
         {
             if (!typeof(IValidator).IsAssignableFrom(validatorType))
             {
-                //throw new System.Exception(AspectMessages.WrongValidationType);
-                throw new System.Exception("Validation Error");
+                throw new System.Exception("Wrong Validation Aspect");
             }
 
             _validatorType = validatorType;

@@ -47,6 +47,18 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPost("transactionalAdd")]
+        public IActionResult TransactionalAdd(Product product)
+        {
+            var result = _productService.AddTransactional(product);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
         [HttpGet("getbyid")]
         public IActionResult GetById(int Id)
         {
