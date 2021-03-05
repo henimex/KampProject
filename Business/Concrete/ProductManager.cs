@@ -114,7 +114,7 @@ namespace Business.Concrete
             }
 
             throw new TransactionAbortedException(Messages.TransactionAborted);
-            return new ErrorResult(Messages.TransactionAborted);
+            //return new ErrorResult(Messages.TransactionAborted);
         }
 
         private IResult CheckAllRules(Product product)
