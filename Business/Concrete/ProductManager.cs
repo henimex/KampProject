@@ -38,7 +38,7 @@ namespace Business.Concrete
 
         [CacheAspect]
         [PerformanceAspect(5)]
-        [SecuredOperation("editor")]
+        //[SecuredOperation("editor")]
         public IDataResult<List<Product>> GetAll()
         {
             if (DateTime.Now.Hour == 20)
