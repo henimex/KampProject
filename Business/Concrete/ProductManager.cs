@@ -38,6 +38,7 @@ namespace Business.Concrete
 
         [CacheAspect]
         [PerformanceAspect(5)]
+        [SecuredOperation("editor")]
         public IDataResult<List<Product>> GetAll()
         {
             if (DateTime.Now.Hour == 20)
@@ -114,7 +115,7 @@ namespace Business.Concrete
             }
 
             throw new TransactionAbortedException(Messages.TransactionAborted);
-            return new ErrorResult(Messages.TransactionAborted);
+            //return new ErrorResult(Messages.TransactionAborted);
         }
 
         private IResult CheckAllRules(Product product)
